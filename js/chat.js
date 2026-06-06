@@ -22,9 +22,9 @@ const categorias = [
   "🙋 Sou Candidato"
 ];
 
-const SCRIPT_URL = "https://script.google.com/macros/s/AKfycby4CgDQvSoy5W3IDB9UyAQMYNefUbPuArE0yT7WOZvZz06TKv5rplYAgcjPn1jvlHxY/exec";
+// ✅ URL CORRETA (a que funcionou no navegador)
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxXDb-SpEB78Z5Yu4m3bnoV0xVDVIDn8D4qpsu5yqHsDXbpB4K42kvgHQeD1JLnzCx6/exec";
 
-// Campos: removemos "potencial"
 const campos = [
   "nome",
   "empresa",
@@ -180,14 +180,15 @@ async function finalizar() {
   try {
     const resposta = await fetch(SCRIPT_URL, {
       method: "POST",
-      mode: "no-cors",               // ← muda aqui
-      headers: { "Content-Type": "text/plain" },  // ← text/plain
+      mode: "cors",                       // ← cors (não no-cors)
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify(lead)
     });
 
-    // Quando mode é "no-cors", a resposta é opaca (não conseguimos ler status)
-    // Então assumimos que deu certo, pois o script recebeu os dados.
-    bot(`
+    const resultado = await resposta.json();
+
+    if (resultado.status === "ok") {
+      bot(`
 ✅ Solicitação recebida com sucesso.
 
 Obrigado pelas informações, ${lead.nome}.
@@ -198,8 +199,10 @@ Nossa equipe irá analisar sua solicitação e direcionar para o programa mais a
 🎓 Educação, Inovação e Desenvolvimento de Talentos
 
 Em breve entraremos em contato através dos canais informados.
-    `);
-
+      `);
+    } else {
+      bot("❌ Erro ao enviar: " + (resultado.mensagem || "Tente novamente"));
+    }
   } catch (erro) {
     bot("❌ Falha na comunicação com o servidor.");
     console.error(erro);
