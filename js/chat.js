@@ -23,7 +23,7 @@ const categorias = [
 ];
 
 // ✅ URL CORRETA (a que funcionou no navegador)
-const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxXDb-SpEB78Z5Yu4m3bnoV0xVDVIDn8D4qpsu5yqHsDXbpB4K42kvgHQeD1JLnzCx6/exec";
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzjvMJiTwh8M7w5sOMx3rN008VID2qRBOpgCTNJMG4LniiJoBG4e5UqhJjgaJfAMJuJ/exec";
 
 const campos = [
   "nome",
@@ -180,7 +180,7 @@ async function finalizar() {
   try {
     const resposta = await fetch(SCRIPT_URL, {
       method: "POST",
-      mode: "cors",                       // ← cors (não no-cors)
+      mode: "no-cors",                       // ← cors (não no-cors)
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(lead)
     });
