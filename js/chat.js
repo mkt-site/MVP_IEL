@@ -31,7 +31,7 @@ const campos = [
 "categoria",
 "necessidade",
 "urgencia",
-"porte"
+"potencial"
 ];
 
 const perguntas = {
