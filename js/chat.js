@@ -22,7 +22,7 @@ const categorias = [
 "🙋 Sou Candidato"
 ];
 
-const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyGbXj0yuCjQoc6ytfdQsHDdTT3KwZ6f2k2F5np1f83M6wMEfzwfRpSA1ytNZhE2miu8Q/exec";
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxB6VReIHEhTOIPsuILicheuiIMnPR_KpvrCTP9isoqOc8Pf8Abf1vMI0uJMXe2pyLr/exec";
 
 const campos = [
 "nome",
