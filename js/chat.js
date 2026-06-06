@@ -129,6 +129,24 @@ bot(perguntas.nome);
 
 };
 
+window.addEventListener("load", () => {
+
+setTimeout(() => {
+
+overlay.style.display = "block";
+janela.style.display = "flex";
+
+if(mensagens.innerHTML === ""){
+
+bot(perguntas.nome);
+
+}
+
+}, 1500);
+
+});
+
+
 function bot(msg){
 
 mensagens.innerHTML += `
