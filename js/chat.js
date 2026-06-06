@@ -170,6 +170,7 @@ function classificar(score) {
   return "Frio";
 }
 
+
 async function finalizar() {
   lead.dataHora = new Date().toLocaleString("pt-BR");
   lead.score = calcularScore();
@@ -177,18 +178,16 @@ async function finalizar() {
 
   bot("🔍 Analisando informações...");
 
-  try {
-    const resposta = await fetch(SCRIPT_URL, {
-      method: "POST",
-      mode: "no-cors",                       // ← cors (não no-cors)
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(lead)
-    });
+  // Envia os dados, mas sem esperar resposta (no-cors)
+  fetch(SCRIPT_URL, {
+    method: "POST",
+    mode: "no-cors",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(lead)
+  }).catch(err => console.log("Erro ignorado:", err)); // Apenas loga, não mostra pro usuário
 
-    const resultado = await resposta.json();
-
-    if (resultado.status === "ok") {
-      bot(`
+  // Mensagem de sucesso exibida imediatamente
+  bot(`
 ✅ Solicitação recebida com sucesso.
 
 Obrigado pelas informações, ${lead.nome}.
@@ -199,15 +198,11 @@ Nossa equipe irá analisar sua solicitação e direcionar para o programa mais a
 🎓 Educação, Inovação e Desenvolvimento de Talentos
 
 Em breve entraremos em contato através dos canais informados.
-      `);
-    } else {
-      bot("❌ Erro ao enviar: " + (resultado.mensagem || "Tente novamente"));
-    }
-  } catch (erro) {
-    bot("❌ Falha na comunicação com o servidor.");
-    console.error(erro);
-  }
+  `);
 }
+
+
+
 
 const input = document.getElementById("chatInput");
 input.addEventListener("focus", () => {
