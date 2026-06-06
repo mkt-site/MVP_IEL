@@ -22,7 +22,7 @@ const categorias = [
   "🙋 Sou Candidato"
 ];
 
-const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxB6VReIHEhTOIPsuILicheuiIMnPR_KpvrCTP9isoqOc8Pf8Abf1vMI0uJMXe2pyLr/exec";
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycby4CgDQvSoy5W3IDB9UyAQMYNefUbPuArE0yT7WOZvZz06TKv5rplYAgcjPn1jvlHxY/exec";
 
 // Campos: removemos "potencial"
 const campos = [
