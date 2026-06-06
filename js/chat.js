@@ -1,27 +1,26 @@
-const potenciais = [
-"Pequeno",
-"Médio",
-"Grande"
+const portes = [
+"Microempresa",
+"Pequena Empresa",
+"Média Empresa",
+"Grande Empresa"
 ];
-
 
 const urgencias = [
-"🔵 Pesquisando",
+"🔵 Apenas pesquisando",
 "🟢 Próximos meses",
 "🟡 Próximas semanas",
-"🔴 Urgente"
+"🔴 Preciso agora"
 ];
-
 
 const categorias = [
-"Automação Industrial",
-"IoT",
-"Assistência Técnica",
-"IA e Visão Computacional",
-"MVP e Prototipagem",
-"Outros"
+"🎓 Estágio",
+"🚀 Inova Talentos",
+"💼 Protalent",
+"📊 Observatório FIESC",
+"👥 Recruta Talentos",
+"🏢 Sou Empresa",
+"🙋 Sou Candidato"
 ];
-
 
 const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyGbXj0yuCjQoc6ytfdQsHDdTT3KwZ6f2k2F5np1f83M6wMEfzwfRpSA1ytNZhE2miu8Q/exec";
 
@@ -32,17 +31,31 @@ const campos = [
 "categoria",
 "necessidade",
 "urgencia",
-"potencial"
+"porte"
 ];
 
 const perguntas = {
-nome:"Olá, seja bem-vindo à Protonest Automação. Qual seu nome?",
-empresa:"Qual o nome da empresa?",
-whatsapp:"Qual seu WhatsApp?",
-categoria:"Qual a categoria da necessidade?",
-necessidade:"Conte um pouco mais sobre sua necessidade.",
-urgencia:"Qual a urgência? (pesquisando, meses, semanas, urgente)",
-potencial:"Qual o porte do projeto? (pequeno, medio, grande)"
+
+nome:
+"Olá 👋 Seja bem-vindo ao IEL Santa Catarina. Qual é o seu nome?",
+
+empresa:
+"Qual o nome da empresa ou instituição?",
+
+whatsapp:
+"Qual seu WhatsApp para contato?",
+
+categoria:
+"Qual serviço você procura?",
+
+necessidade:
+"Conte um pouco mais sobre sua necessidade.",
+
+urgencia:
+"Qual a urgência da demanda?",
+
+porte:
+"Qual o porte da empresa?"
 };
 
 let etapa = 0;
@@ -52,25 +65,23 @@ document.body.insertAdjacentHTML("beforeend",`
 
 <div class="chat-overlay"></div>
 
-
 <div class="chat-btn">
 
 <span class="desktop-chat">
-✨ Consultor
+💬 Atendimento
 </span>
 
 <span class="mobile-chat">
-✨
+💬
 </span>
 
 </div>
-
 
 <div class="chat-window">
 
 <div class="chat-header">
 
-<span>ProtoNest Automação</span>
+<span>IEL Santa Catarina</span>
 
 <span class="chat-close">✖</span>
 
@@ -87,9 +98,9 @@ document.body.insertAdjacentHTML("beforeend",`
 
 `);
 
-const btn=document.querySelector(".chat-btn");
-const janela=document.querySelector(".chat-window");
-const mensagens=document.querySelector(".chat-messages");
+const btn = document.querySelector(".chat-btn");
+const janela = document.querySelector(".chat-window");
+const mensagens = document.querySelector(".chat-messages");
 const fechar = document.querySelector(".chat-close");
 const overlay = document.querySelector(".chat-overlay");
 
@@ -105,26 +116,41 @@ mensagens.innerHTML = "";
 
 };
 
+btn.onclick = () => {
 
-btn.onclick=()=>{
+overlay.style.display = "block";
+janela.style.display = "flex";
 
-overlay.style.display="block";
-janela.style.display="flex";
+if(mensagens.innerHTML === ""){
 
-if(mensagens.innerHTML===""){
 bot(perguntas.nome);
+
 }
 
 };
 
 function bot(msg){
-mensagens.innerHTML += `<div class="bot">${msg}</div>`;
+
+mensagens.innerHTML += `
+<div class="bot">
+${msg}
+</div>
+`;
+
 mensagens.scrollTop = mensagens.scrollHeight;
+
 }
 
 function user(msg){
-mensagens.innerHTML += `<div class="user">${msg}</div>`;
+
+mensagens.innerHTML += `
+<div class="user">
+${msg}
+</div>
+`;
+
 mensagens.scrollTop = mensagens.scrollHeight;
+
 }
 
 function mostrarBotoes(lista){
@@ -145,11 +171,11 @@ html += '</div>';
 
 mensagens.innerHTML += html;
 
-document.querySelectorAll(".opcao-btn").forEach(btn=>{
+document.querySelectorAll(".opcao-btn").forEach(btn => {
 
-btn.onclick=()=>{
+btn.onclick = () => {
 
-document.querySelectorAll(".opcoes").forEach(op=>{
+document.querySelectorAll(".opcoes").forEach(op => {
 op.remove();
 });
 
@@ -163,29 +189,33 @@ enviar();
 });
 
 }
-document.getElementById("sendBtn").onclick=enviar;
 
-document.getElementById("chatInput").addEventListener("keypress",e=>{
-if(e.key==="Enter") enviar();
+document.getElementById("sendBtn").onclick = enviar;
+
+document.getElementById("chatInput").addEventListener("keypress", e => {
+
+if(e.key === "Enter")
+enviar();
+
 });
 
 function enviar(){
 
-const input=document.getElementById("chatInput");
+const input = document.getElementById("chatInput");
 
-const valor=input.value.trim();
+const valor = input.value.trim();
 
 if(!valor) return;
 
 user(valor);
 
-lead[campos[etapa]]=valor;
+lead[campos[etapa]] = valor;
 
-input.value="";
+input.value = "";
 
 etapa++;
 
-if(etapa<campos.length){
+if(etapa < campos.length){
 
 bot(perguntas[campos[etapa]]);
 
@@ -201,16 +231,14 @@ mostrarBotoes(urgencias);
 
 }
 
-if(campos[etapa] === "potencial"){
+if(campos[etapa] === "porte"){
 
-mostrarBotoes(potenciais);
+mostrarBotoes(portes);
 
 }
-  
-  
 
-
-}else{
+}
+else{
 
 finalizar();
 
@@ -222,10 +250,13 @@ function calcularScore(){
 
 let score = 0;
 
-const urgencia = lead.urgencia.toLowerCase();
-const potencial = lead.potencial.toLowerCase();
+const urgencia =
+(lead.urgencia || "").toLowerCase();
 
-if(urgencia.includes("urgente"))
+const porte =
+(lead.porte || "").toLowerCase();
+
+if(urgencia.includes("agora"))
 score += 50;
 
 else if(urgencia.includes("seman"))
@@ -234,13 +265,16 @@ score += 30;
 else if(urgencia.includes("mes"))
 score += 15;
 
-if(potencial.includes("grande"))
-score += 50;
+if(porte.includes("grande"))
+score += 40;
 
-else if(potencial.includes("médio") || potencial.includes("medio"))
-score += 30;
+else if(porte.includes("média"))
+score += 25;
 
-else if(potencial.includes("pequeno"))
+else if(porte.includes("pequena"))
+score += 15;
+
+else if(porte.includes("micro"))
 score += 10;
 
 return score;
@@ -260,45 +294,58 @@ return "Frio";
 }
 
 async function finalizar(){
+
 lead.dataHora =
 new Date().toLocaleString("pt-BR");
-  
-lead.score=calcularScore();
 
-lead.classificacao=classificar(lead.score);
+lead.score =
+calcularScore();
 
-bot("Obrigado. Analisando...");
+lead.classificacao =
+classificar(lead.score);
+
+bot("🔍 Analisando informações...");
 
 await fetch(SCRIPT_URL,{
+
 method:"POST",
+
 mode:"no-cors",
+
 headers:{
 "Content-Type":"text/plain"
 },
+
 body:JSON.stringify(lead)
+
 });
 
 bot(`
+
 ✅ Solicitação recebida com sucesso.
-Obrigado pelas informações. Sr(a): 
-${lead.nome}.
 
-Nossa equipe analisará sua necessidade e entrará em contato em breve através dos canais informados.
+Obrigado pelas informações, ${lead.nome}.
 
-ProtoNest Automação
-Soluções Inteligentes para Indústria e Agro.
+Nossa equipe irá analisar sua solicitação e direcionar para o programa mais adequado.
+
+📌 IEL Santa Catarina
+🎓 Educação, Inovação e Desenvolvimento de Talentos
+
+Em breve entraremos em contato através dos canais informados.
+
 `);
 
 }
+
 const input = document.getElementById("chatInput");
 
 input.addEventListener("focus", () => {
 
-  setTimeout(() => {
+setTimeout(() => {
 
-    mensagens.scrollTop = mensagens.scrollHeight;
+mensagens.scrollTop =
+mensagens.scrollHeight;
 
-  }, 300);
+}, 300);
 
 });
-
